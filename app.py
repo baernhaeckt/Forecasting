@@ -14,7 +14,7 @@ app = Flask(__name__)
 look_back = 1
 graph = tf.get_default_graph()
 
-@app.route('/forcasting')
+@app.route('/forecasting')
 def plot_png():
     
     with graph.as_default():
