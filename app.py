@@ -3,6 +3,8 @@ import random
 import pandas as pd
 import numpy as np
 import tensorflow as tf
+import datetime
+import matplotlib.dates as mdates
 
 from flask import Response, Flask
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
@@ -51,9 +53,14 @@ def create_figure(dataset, pastPredict, futurePredict, scaler):
     futurePredictPlot[:, :] = np.nan
     futurePredictPlot[len(pastPredict) + (look_back * 2) + 1:len(dataset) - 1, :] = futurePredict
     
-    fig = Figure()
+    fig = Figure(figsize=(20,10))
     axis = fig.add_subplot(1, 1, 1)
     axis.set_title("Leaf Point Statistik 2019")
+    axis.set_ylabel("Leaf Point")
+    axis.set_xlabel("Zeit")
+    ticklabels = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"]
+    axis.set_xticklabels(ticklabels)
+
     axis.plot(scaler.inverse_transform(dataset[:-20]), label="Original")
     axis.plot(futurePredictPlot, label="Trend")
     axis.legend()
